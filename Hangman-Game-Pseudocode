@@ -1,0 +1,36 @@
+Hangman-Game-Pseudocode
+
+
+USER ===>
+
+The page gives instruction to the user - "press any letters from keyboard to guess" or click "start"
+
+The word to be guessed should be displayed randomly 
+	> words stored in variable 
+	> be able to fill the fields with right user guess
+	> display the length of the viariable as _ _ _ _ _
+
+
+user can guess all 26 alphabets 
+
+	Guess letters through keyboard
+	The guessed letters will be displayed
+		if guess is true, then it will display in the answer field.
+		if guess is wrong, then it will display in the wrong guess field.
+
+
+The total chances of 10 can be given to the user, 
+	> choices to be subtracted for each right guess letters
+	
+
+All the user wrong user guesses need to be displayed in the wrong field
+
+after filling the word with right guess - display "You Won"
+If the wrong guess excedds 10, then display "You Loss"
+
+
+No repeat of letters allowed.
+
+
+
+

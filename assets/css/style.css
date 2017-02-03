@@ -1,0 +1,18 @@
+body {
+	margin: 30px;
+	background: #ccc;
+}
+
+#game-won {
+	display: block;
+	color: green;
+	font-size: 40px;
+	padding: 50px;
+
+}
+
+#game-lost {
+	color: red;
+	font-size: 40px;
+	padding: 50px;
+}
