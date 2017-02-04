@@ -1,18 +1,23 @@
 body {
-	margin: 30px;
-	background: #ccc;
+	margin: 118px;
+	/*background: #ccc;*/
+	background-image: url("../images/hangman-1.002.jpeg");
+	background-size: cover;
+	background-repeat: no-repeat;
+
 }
 
 #game-won {
-	display: block;
+	display: none;
 	color: green;
 	font-size: 40px;
-	padding: 50px;
+	padding-top: 50px;
 
 }
 
 #game-lost {
+	display: none;
 	color: red;
 	font-size: 40px;
-	padding: 50px;
+	padding-top: 40px;
 }

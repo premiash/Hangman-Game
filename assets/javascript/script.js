@@ -1,17 +1,26 @@
+	
 
+	var initializeGame = function()
+	{
+		document.querySelector("#info-text").innerHTML 
+										= "Press any key to Get Started";
+		document.getElementById('game-inprogress').style.display = "block";
+		document.getElementById('game-won').style.display = "none";
+		document.getElementById('game-lost').style.display = "none";
 
-	var gameWords = ["dinosaur", "chimpanzee", "cockroach", "mongoose"];
+		matchedLetters.length = 0;
+		unMatchedLetters.length = 0;
+		answerWords.length = 0;
+		alreadyGuessed = "";
 
-	var MAX_USER_TRIES = 10; 
+		document.querySelector("#letters-used").innerHTML = "Letters Already Guessed: ";
+				
+		document.querySelector("#failed-choice-count").innerHTML = 
+					"Number of Guesses Remaining #: " + MAX_USER_TRIES;
 
-	var randomWords = gameWords[Math.floor(Math.random() * gameWords.length)];
+		randomWords = gameWords[Math.floor(Math.random() * gameWords.length)];
+		console.log ("random word is: " + randomWords); 
 
-	var matchedLetters = [];
-	var unMatchedLetters = [];
-
-	console.log ("random word is: " + randomWords); 
-
-		var answerWords = [];
 		for (var i = 0; i < randomWords.length; i++) 
 		{
 			answerWords[i] = "_";
@@ -19,11 +28,35 @@
 
 		document.querySelector('#game').innerHTML = answerWords.join(" ");
 
-		var remainingLetterCount = randomWords.length;
-		console.log("remainingLetterCount: " + remainingLetterCount);
+		return randomWords.length;
+	}
 
+	var gameWords = ["dinosaur", "chimpanzee", "cockroach", "mongoose"];
+
+	var randomWords = [];
+	var answerWords = [];
+
+	var MAX_USER_TRIES = 10; 
+
+	var matchedLetters = [];
+	var unMatchedLetters = [];
+
+	var remainingLetterCount = initializeGame();
+	console.log("remainingLetterCount: " + remainingLetterCount);
+
+	var alreadyGuessed = "";
+	var gameover = false;
+		
 		document.onkeyup = function(event) 
 		{
+			if(gameover)
+			{
+				gameover = false;
+
+				remainingLetterCount = initializeGame();	
+				return;
+			}
+
 			var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
 
 			console.log(userGuess);
@@ -48,15 +81,14 @@
 						{
 
 							document.querySelector('#game').innerHTML = randomWords;	
-							// alert("You won!");
+
 							var targetDisplayWon = document.getElementById('game-won');
-		
-							var youWonDisplay = document.createElement("div");
-							youWonDisplay.innerHTML = "YOU WON";
-							targetDisplayWon.appendChild(youWonDisplay);
-							youWonDisplay.setAttribute("id", "game-won");
-							// location.reload();
-							
+							targetDisplayWon.style.display = "block";
+							targetDisplayWon.innerHTML = "You Won!!";
+
+							document.querySelector("#info-text").innerHTML 
+										= "Press any key to restart the game";
+							gameover = true;
 						}
 					} 
 				}
@@ -66,27 +98,33 @@
 			{
 				unMatchedLetters.push(userGuess);
 
-				document.querySelector("#letters-used").innerHTML += " "  + userGuess;
-				document.querySelector("#failed-choice-count").innerHTML = "Choices left:" + (MAX_USER_TRIES - unMatchedLetters.length);
+				alreadyGuessed += " "  + userGuess;
+				document.querySelector("#letters-used").innerHTML 
+										= "Letters Already Guessed: " + alreadyGuessed;
+				
+				document.querySelector("#failed-choice-count").innerHTML = 
+							"Number of Guesses Remaining #: " + 
+							(MAX_USER_TRIES - unMatchedLetters.length);
 			}
 
 			if(unMatchedLetters.length == MAX_USER_TRIES)
 			{
-				// alert("You lost :(");
 				var targetDisplayLost = document.getElementById('game-lost');
-		
-				var youLostDisplay = document.createElement("div");
-				youLostDisplay.innerHTML = "YOU LOST";
-				targetDisplayLost.appendChild(youLostDisplay);
-				youLostDisplay.setAttribute("id", "game-lost");
-				
+				targetDisplayLost.style.display = "block";
+				targetDisplayLost.innerHTML = "You lost";
 
+				document.querySelector("#info-text").innerHTML 
+										= "Press any key to restart the game";
+
+				gameover = true;
 			}
 			console.log("unMatchedLetters: " + unMatchedLetters);
 			console.log("matchedLetters: " + matchedLetters);
 
 
 		}
+
+		
 
 		var isUserGuessMatched = function(userGuess)
 		{
